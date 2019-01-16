@@ -38,7 +38,7 @@
   (define (close-enough? a b) (< (abs (- a b)) tolerance))
   (define (try guess)
     (let ((next (f guess)))
-      (if (close-enought? guess next)
+      (if (close-enough? guess next)
           next
           (try next))))
   (try first-guess))
