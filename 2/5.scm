@@ -1,0 +1,18 @@
+#lang sicp
+(define (cons a b)
+  ( * (expt 2 a)
+      (expt 3 b)))
+(define (search-pow m n)
+  (define (search-iter m n counter)
+    (if (= (remainder m n) 0)
+        (search-iter (/ m n) n (+ counter 1))
+        counter))
+  (search-iter m n 0))
+(define (car z)
+  (search-pow z 2))
+(define (cdr z)
+  (search-pow z 3))
+
+(define z (cons 5 7))
+(car z)
+(cdr z)
