@@ -14,3 +14,7 @@
       (append (reverse (cdr l)) (list (car l)))
       l))
 (reverse (list 1 4 9 16 25))
+
+(define x1 (list (list 1 2) (list 3 4)))
+x1
+(reverse x1)
