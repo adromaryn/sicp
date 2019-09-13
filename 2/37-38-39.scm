@@ -1,4 +1,5 @@
 #lang sicp
+(#%require r5rs/init)
 
 (define (accumulate op initial sequence)
   (if (null? sequence)
