@@ -50,3 +50,7 @@
                            (edge1-frame frame))
                (scale-vect (ycor-vect v)
                            (edge2-frame frame))))))
+
+(define (make-segment vect1 vect2) (cons vect1 vect2))
+(define (start-segment s) (car s))
+(define (end-segment s) (cdr s))
