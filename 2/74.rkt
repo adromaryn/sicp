@@ -11,7 +11,7 @@
 (define (apply-generic op . args)
   (let ((type-tags (map type-tag args)))
     (let ((proc (get op type-tags)))
-      (if proc
+      (if (not (null? proc))
           (apply proc (map contents args))
           (error
            "Нет метода для этих типов -- APPLY-GENERIC"
