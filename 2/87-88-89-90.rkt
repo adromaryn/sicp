@@ -418,6 +418,25 @@
   (define (add-terms L1 L2)
     (remove-zeros (add-terms-with-zeroes L1 L2)))
 
+  (define (mul-terms L1 L2)
+    (if (empty-termlist? L1)
+        (the-empty-termlist)
+        (add-terms (mul-term-by-all-terms (first L1) L2 (- (length L1) 1))
+                   (mul-terms (rest-terms L1) L2))))
+
+  (define (mul-term-by-all-terms t1 L range1)
+    (define (add-range p r zeros)
+      (if (= 0 r)
+          (append p zeros)
+          (add-range p (- r 1) (cons 0 zeros))))
+    (add-range
+      (if (empty-termlist? L)
+          (the-empty-termlist)
+          (let ((t2 (first-term L)))
+            (adjoin-term (mul t1 t2)
+                         (mul-term-by-all-terms t1 (rest-terms L) 0))))
+      range1 '()))
+
   (define (invert-terms terms)
     (map invert terms))
 
@@ -425,8 +444,8 @@
   (define (tag p) (attach-tag 'dense p))
   (put 'add '(dense dense)
        (lambda (L1 L2) (tag (add-terms L1 L2))))
-  ;(put 'mul '(dense dense)
-  ;     (lambda (L1 L2) (tag (mul-terms L1 L2))))
+  (put 'mul '(dense dense)
+       (lambda (L1 L2) (tag (mul-terms L1 L2))))
   (put 'make 'dense (lambda (L) (tag L)))
   (put '=zero? 'dense empty-termlist?)
   (put 'invert '(dense) (lambda (L) (tag (invert-terms L))))
@@ -441,6 +460,7 @@
 (define (make-poly-dense var terms)
   ((get 'make-dense 'polynomial) var terms))
 
+(display "\nПроверка разреженного представления:\n")
 (define x (make-poly-sparse 'x
                             '((10 -3)
                               (5 2)
@@ -449,16 +469,29 @@
 (define y (make-poly-sparse 'x
                             '((7 2)
                               (5 -1)
+
                               (1 2))))
+
+(display "Исходные данные:\n")
 x
 y
+(display "Сумма:\n")
 (add x y)
-
+(display "Разность:\n")
 (sub x y)
+(display "Произведение:\n")
+(mul x y)
 
+
+(display "\nПроверка плотного представления:\n")
 (define x2 (make-poly-dense 'x '(1 -2 3 4)))
 (define y2 (make-poly-dense 'x '(1 -2 3)))
+(display "Исходные данные:\n")
 x2
 y2
+(display "Сумма:\n")
 (add x2 y2)
+(display "Разность:\n")
 (sub x2 y2)
+(display "Произведение:\n")
+(mul x2 y2)
