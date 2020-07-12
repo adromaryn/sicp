@@ -1,0 +1,85 @@
+#lang sicp
+
+(define (make-accumulator acc)
+  (lambda (addition)
+    (begin
+      (set! acc (+ acc addition))
+      acc)))
+
+(display "Accumulator\n")
+(define A (make-accumulator 5))
+(A 10)
+(A 10)
+
+(define (make-monitored func)
+  (let ((counter 0))
+    (lambda args
+      (if (and (not (null? args)) (equal? (car args) 'how-many-calls?))
+          counter
+          (begin
+            (set! counter (+ counter 1))
+            (apply func args))))))
+
+
+(display "Monitoring\n")
+(display "sqrt:\n")
+(define s (make-monitored sqrt))
+(s 'how-many-calls?)
+(s 144)
+(s 'how-many-calls?)
+
+(display "ok:\n")
+(define s1 (make-monitored (lambda () (display "ok\n"))))
+(s1 'how-many-calls?)
+(s1)
+(s1 'how-many-calls?)
+(s1)
+(s1 'how-many-calls?)
+
+(display "sum:\n")
+(define s2 (make-monitored (lambda (a b) (+ a b))))
+(s2 'how-many-calls?)
+(s2 1 2)
+(s2 'how-many-calls?)
+
+(define (make-account balance secret)
+  (let ((attempt-counter 7))
+    (begin
+      (define (call-the-cops)
+        (error "Уже вызываю легавых, Джимми!"))
+      (define (withdraw amount)
+        (if (>= balance amount)
+            (begin (set! balance (- balance amount))
+                   balance)
+            "Недостаточно денег на счёте!"))
+      (define (deposit amount)
+        (set! balance (+ balance amount))
+        balance)
+      (define (dispatch op-secret m)
+        (cond ((= attempt-counter 0)
+               (begin (call-the-cops)
+                       (lambda args "Исчерпано число попыток ввода пароля")))
+              ((not (eq? secret op-secret))
+               (begin (set! attempt-counter (- attempt-counter 1))
+                      (lambda args "Неверный пароль")))
+              ((eq? m 'withdraw) withdraw)
+              ((eq? m 'deposit) deposit)
+              (else (error "Неизвестный вызов -- MAKE-ACCOUNT"
+                           m))))
+      dispatch)
+    ))
+
+(display "Make account:\n")
+(define acc (make-account 100 'mypass))
+((acc 'secret 'withdraw) 50)
+((acc 'mypass 'withdraw) 50)
+((acc 'mypass 'withdraw) 60)
+((acc 'mypass 'deposit) 100)
+((acc 'mypass 'withdraw) 60)
+((acc 'secret 'withdraw) 50)
+((acc 'secret 'withdraw) 50)
+((acc 'secret 'withdraw) 50)
+((acc 'secret 'withdraw) 50)
+((acc 'secret 'withdraw) 50)
+((acc 'secret 'withdraw) 50)
+((acc 'secret 'withdraw) 50)
