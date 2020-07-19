@@ -70,12 +70,12 @@
 
 (display "Rand generate new cesaro\n")
 (define (cesaro-test-2)
-  (= (gcd (rand) (rand)) 1))
+  (= (gcd (rand 'generate) (rand 'generate)) 1))
 
 (define (estimate-pi-2 trials)
   (sqrt (/ 6 (monte-carlo trials cesaro-test-2))))
 
-(estimate-pi 1000000)
+(estimate-pi-2 1000000)
 
 (display "Rand generate\n")
 (rand 'generate)
