@@ -1,4 +1,8 @@
 #lang sicp
+
+(define (make-table)
+  (list '*table*))
+
 (define (lookup key-1 key-2 table)
   (let ((subtable (assoc key-1 (cdr table))))
     (if subtable
