@@ -1,0 +1,1 @@
+[{"kind":2,"name":"Founder::Const::Mailer","line":0,"defintion":1},{"containerName":"Founder::Const::Mailer","line":3,"name":"STATUS_OK","kind":14,"defintion":1},{"kind":12,"name":"STATUS_MAILER_ERROR","line":4},{"line":5,"name":"STATUS_FAIL","kind":12}]

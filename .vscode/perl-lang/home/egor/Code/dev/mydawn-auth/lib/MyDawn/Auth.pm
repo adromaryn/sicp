@@ -1,0 +1,1 @@
+[{"defintion":1,"kind":2,"line":0,"name":"MyDawn::Auth"},{"containerName":"","name":"strict","line":2,"kind":2}]

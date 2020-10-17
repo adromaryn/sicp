@@ -1,0 +1,1 @@
+[{"kind":2,"line":0,"name":"Founder::WebSocket::Event","defintion":1},{"name":"strict","containerName":"","kind":2,"line":1},{"name":"warnings","containerName":"","kind":2,"line":2},{"kind":2,"containerName":"","line":3,"name":"utf8"},{"containerName":"Founder::WebSocket::Event","kind":2,"line":5,"name":"PublishPost"}]

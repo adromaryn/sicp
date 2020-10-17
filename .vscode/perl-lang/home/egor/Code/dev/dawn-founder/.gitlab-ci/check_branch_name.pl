@@ -1,0 +1,1 @@
+[{"containerName":"","kind":2,"name":"strict","line":3},{"containerName":"","line":4,"name":"warnings","kind":2},{"containerName":null,"name":"$branch","line":8,"kind":13,"defintion":"my"},{"line":8,"name":"%ENV","kind":13,"containerName":null},{"line":10,"name":"%branch","kind":13,"containerName":null}]

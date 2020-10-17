@@ -1,5 +1,8 @@
 #lang sicp
 
+(define (make-table)
+  (list '*table*))
+
 (define (lookup key table)
   (let ((record (assoc key (cdr table))))
     (if record
