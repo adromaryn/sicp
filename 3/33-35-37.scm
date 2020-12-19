@@ -13,6 +13,7 @@
       (cond ((not (has-value? me))
              (set! value newval)
              (set! informant setter)
+             (newline)
              (for-each-except setter
                               inform-about-value
                               constraints))
@@ -198,17 +199,18 @@
 (define a (make-connector))
 (define b (make-connector))
 (define c (make-connector))
+
+(averager a b c)
 (probe "1 слагаемое" a)
 (probe "2 слагаемое" b)
 (probe "Сумма" c)
-
-(averager a b c)
 
 (set-value! a 3 'user)
 (set-value! b 5 'user)
 (forget-value! a 'user)
 (set-value! c 5 'user)
 
+;; Связь - квадратный кореньы
 (display "Squarer test:")
 (newline)
 
@@ -239,13 +241,15 @@
 
 (define a1 (make-connector))
 (define b1 (make-connector))
+(squarer a1 b1)
 (probe "Корень" a1)
 (probe "Квадрат" b1)
-(squarer a1 b1)
 (set-value! b1 10 'user)
 (forget-value! b1 'user)
 (set-value! a1 10 'user)
 
+
+;; Перезадание конвертера градусовы
 (display "Redefine Cels-Farht")
 
 (define (c+ x y)
