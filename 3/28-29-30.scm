@@ -214,8 +214,8 @@
   'ok)
 
 (define (logical-or s1 s2)
-  (cond ((and (= s1 1) (= s2 1)) 1)
-        ((or (= s1 0) (= s2 0)) 0)
+  (cond ((or (= s1 1) (= s2 1)) 1)
+        ((and (= s1 0) (= s2 0)) 0)
         (else (error "Неправильный сигнал" s1 s2))))
 
 (define (or-gate-2 a1 a2 output)
