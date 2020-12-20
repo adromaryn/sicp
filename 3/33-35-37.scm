@@ -13,7 +13,6 @@
       (cond ((not (has-value? me))
              (set! value newval)
              (set! informant setter)
-             (newline)
              (for-each-except setter
                               inform-about-value
                               constraints))
