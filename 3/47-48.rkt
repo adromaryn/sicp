@@ -53,7 +53,7 @@ x
                   (s (lambda () (set! x2 (+ x2 1)))))
 x2
 
-(define (make-account balance)
+(define (make-account balance id)
   (define (withdraw amount)
     (if (>= balance amount)
         (begin (set! balance (- balance amount))
@@ -67,6 +67,7 @@ x2
       (cond ((eq? m 'withdraw) (protected withdraw))
             ((eq? m 'deposit) (protected deposit))
             ((eq? m 'balance) balance)
+            ((eq? m 'id) id)
             (else (error "Unknown request -- MAKE-ACCOUNT"
                          m))))
     dispatch))
@@ -123,4 +124,22 @@ x2
             ((eq? m 'release) release)
             (else (error "Неизвестный метод -- MAKE-SEMAPHORE" m))))
     the-sem))
-  
+
+;; exchange balance without deadlock (3.48)
+(define (exchange account1 account2)
+  (let ((difference (- (account1 'balance)
+                       (account2 'balance))))
+    ((account1 'withdraw) difference)
+    ((account2 'deposit) difference)
+    'ok))
+
+(define (serialized-exchange account1 account2)
+  (let ((serializer1 (account1 'serializer))
+        (serializer2 (account2 'serializer)))
+    (if (< (account1 'id) (account2 'id))
+        ((serializer1 (serializer2 exchange))
+         account1
+         account2)
+        ((serializer2 (serializer1 exchange))
+         account1
+         account2))))
