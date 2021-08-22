@@ -50,6 +50,13 @@
 (define (display-stream s)
   (stream-for-each display-line s))
 
+(define (enumerate-interval low high)
+  (if (> low high)
+      the-empty-stream
+      (cons
+       low
+       (enumerate-interval (+ low 1) high))))
+
 (define (display-stream-part s n)
   (for-each (lambda (n) (display-line (stream-ref s n))) (enumerate-interval 0 n)))
 
@@ -212,13 +219,6 @@
 (define (partial-sums s)
   (define s2 (add-streams s (cons-stream 0 s2)))
   s2)
-
-(define (enumerate-interval low high)
-  (if (> low high)
-      the-empty-stream
-      (cons
-       low
-       (enumerate-interval (+ low 1) high))))
 
 (display-line "Частичные суммы натуральных чисел")
 (display-stream-part (partial-sums integers) 10)
